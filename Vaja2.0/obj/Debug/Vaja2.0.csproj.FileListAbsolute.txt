@@ -1,0 +1,9 @@
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\bin\Debug\Vaja2.0.exe.config
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\bin\Debug\Vaja2.0.exe
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\bin\Debug\Vaja2.0.pdb
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2.0.csprojAssemblyReference.cache
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2._0.Form1.resources
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2._0.Properties.Resources.resources
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2.0.csproj.GenerateResource.cache
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2.0.exe
+D:\Faks\02.Semester\UI\02.VAJA\Vaja2.0\Vaja2.0\Vaja2.0\obj\Debug\Vaja2.0.pdb
