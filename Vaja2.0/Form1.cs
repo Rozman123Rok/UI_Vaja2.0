@@ -34,10 +34,6 @@ namespace Vaja2._0
         int Igralec_Zmage = 0, AI_Zmage = 0;
         bool zmaga_igralca = false; // ce je igralec zmagal
 
-
-
-
-
         private void radioButton1_Click(object sender, EventArgs e)
         {
             MAX_globina = 1;
@@ -237,7 +233,7 @@ namespace Vaja2._0
         }
 
         private void ai_move() {
-            Check();
+            preveri_zmaga();
             if (zmaga_igralca) { zmaga_igralca = false; return; }
             bool pogoj = false; /// da se vrti v loop dokler nima prave cifre
             if (st_praznih == 0) { resetGame(); return; }
@@ -332,11 +328,7 @@ namespace Vaja2._0
                 }
             } while (!pogoj);
 
-            Check();
-            
-        }
-
-        private void preveri_zmaga(int[,] polje) { 
+            preveri_zmaga();
             
         }
 
@@ -391,8 +383,9 @@ namespace Vaja2._0
             st_praznih = 9; // damo nazaj na 9
 
         }
-        private void Check()
+        private void preveri_zmaga()
         {
+            //// mogoce bi si se mogo dodat polje not da bi pregledoval!
             /// preverjamo ce je kdo zmagal
             /// najprej za igralca
             if (button1.Text == "X" && button2.Text == "X" && button3.Text == "X"
@@ -429,6 +422,12 @@ namespace Vaja2._0
                 resetGame();
             }
         }
+
+        /*
+            ugotovit mores kak bos naredil premik
+            lahko bi ga mel kot eno stevilko med 0 in 8 mogoce da pol ves kateri gumb stisnet
+            ker ce si polje posilas pol tezko ugotovis kateri gumb rabis
+         */
 
     }
 }
