@@ -90,7 +90,8 @@ namespace Vaja2._0
                 tabela[0, 0] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[0, 0] + " max_globina: " + MAX_globina);
             }
         }
@@ -106,7 +107,8 @@ namespace Vaja2._0
                 tabela[0, 1] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[0, 1] + " max_globina: " + MAX_globina);
             }
         }
@@ -122,7 +124,8 @@ namespace Vaja2._0
                 tabela[0, 2] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[0, 2] + " max_globina: " + MAX_globina);
             }
         }
@@ -138,7 +141,8 @@ namespace Vaja2._0
                 tabela[1, 0] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[1, 0] + " max_globina: " + MAX_globina);
             }
         }
@@ -154,7 +158,8 @@ namespace Vaja2._0
                 tabela[1, 1] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[1, 1] + " max_globina: " + MAX_globina);
             }
         }
@@ -170,7 +175,8 @@ namespace Vaja2._0
                 tabela[1, 2] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti aiai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[1, 2] + " max_globina: " + MAX_globina);
             }
         }
@@ -185,8 +191,9 @@ namespace Vaja2._0
                 button7.BackColor = System.Drawing.Color.Cyan; /// spremenim barvo gumba
                 tabela[2, 0] = 1;
                 st_praznih--;
-
-                ai_move(); /// na vrsti ai
+                //MessageBox.Show("Izracun: " + izracun_ocene(tabela));
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[2, 0] + " max_globina: " + MAX_globina);
             }
         }
@@ -202,7 +209,8 @@ namespace Vaja2._0
                 tabela[2, 1] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //izpis_polja(tabela);
                 //MessageBox.Show("Tabela: " + tabela[2, 1] + " max_globina: " + MAX_globina);
             }
@@ -219,7 +227,8 @@ namespace Vaja2._0
                 tabela[2, 2] = 1;
                 st_praznih--;
 
-                ai_move(); /// na vrsti ai
+                ai_z_minimax();
+                //ai_move(); /// na vrsti ai
                 //MessageBox.Show("Tabela: " + tabela[2, 2] + " max_globina: " + MAX_globina);
             }
         }
@@ -233,7 +242,8 @@ namespace Vaja2._0
         }
 
         private void ai_move() {
-            preveri_zmaga();
+            //preveri_zmaga();
+            preveri_zmaga(tabela);
             if (zmaga_igralca) { zmaga_igralca = false; return; }
             bool pogoj = false; /// da se vrti v loop dokler nima prave cifre
             if (st_praznih == 0) { resetGame(); return; }
@@ -328,8 +338,9 @@ namespace Vaja2._0
                 }
             } while (!pogoj);
 
-            preveri_zmaga();
-            
+            //preveri_zmaga();
+            preveri_zmaga(tabela);
+
         }
 
         private void resetGame()
@@ -383,19 +394,29 @@ namespace Vaja2._0
             st_praznih = 9; // damo nazaj na 9
 
         }
-        private void preveri_zmaga()
+        private void preveri_zmaga(int[,] tabela)
         {
             //// mogoce bi si se mogo dodat polje not da bi pregledoval!
             /// preverjamo ce je kdo zmagal
             /// najprej za igralca
-            if (button1.Text == "X" && button2.Text == "X" && button3.Text == "X"
+            /// 
+            if(tabela[0,0] ==1 && tabela[0,1] == 1 && tabela[0,2] == 1 
+                || tabela[1, 0] == 1 && tabela[1, 1] == 1 && tabela[1, 2] == 1
+                || tabela[2, 0] == 1 && tabela[2, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 0] == 1 && tabela[2, 0] == 1 
+                || tabela[0, 1] == 1 && tabela[1, 1] == 1 && tabela[2, 1] == 1
+                || tabela[0, 2] == 1 && tabela[1, 2] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 2] == 1 && tabela[1, 1] == 1 && tabela[2, 0] == 1)
+
+           /* if (button1.Text == "X" && button2.Text == "X" && button3.Text == "X"
                 || button4.Text == "X" && button5.Text == "X" && button6.Text == "X"
                 || button7.Text == "X" && button8.Text == "X" && button9.Text == "X"
                 || button1.Text == "X" && button4.Text == "X" && button7.Text == "X"
                 || button2.Text == "X" && button5.Text == "X" && button8.Text == "X"
                 || button3.Text == "X" && button6.Text == "X" && button9.Text == "X"
                 || button1.Text == "X" && button5.Text == "X" && button9.Text == "X"
-                || button3.Text == "X" && button5.Text == "X" && button7.Text == "X")
+                || button3.Text == "X" && button5.Text == "X" && button7.Text == "X")*/
             {
                 // igralec je zmagal
                 //AImoves.Stop(); /// MORES POL ZBRISAT
@@ -405,6 +426,7 @@ namespace Vaja2._0
                 zmaga_igralca = true;
                 resetGame(); ///  znova zazenemo igro
             }
+            /*
             else if (button1.Text == "O" && button2.Text == "O" && button3.Text == "O"
                 || button4.Text == "O" && button5.Text == "O" && button6.Text == "O"
                 || button7.Text == "O" && button8.Text == "O" && button9.Text == "O"
@@ -413,6 +435,15 @@ namespace Vaja2._0
                 || button3.Text == "O" && button6.Text == "O" && button9.Text == "O"
                 || button1.Text == "O" && button5.Text == "O" && button9.Text == "O"
                 || button3.Text == "O" && button5.Text == "O" && button7.Text == "O")
+                */
+            if (tabela[0, 0] == 2 && tabela[0, 1] == 2 && tabela[0, 2] == 2
+                || tabela[1, 0] == 2 && tabela[1, 1] == 2 && tabela[1, 2] == 2
+                || tabela[2, 0] == 2 && tabela[2, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 0] == 2 && tabela[2, 0] == 2
+                || tabela[0, 1] == 2 && tabela[1, 1] == 2 && tabela[2, 1] == 2
+                || tabela[0, 2] == 2 && tabela[1, 2] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 2] == 2 && tabela[1, 1] == 2 && tabela[2, 0] == 2)
             {
                 /// zmaga AI
                 //AImoves.Stop(); /// MORES POL ZBRISAT
@@ -428,6 +459,440 @@ namespace Vaja2._0
             lahko bi ga mel kot eno stevilko med 0 in 8 mogoce da pol ves kateri gumb stisnet
             ker ce si polje posilas pol tezko ugotovis kateri gumb rabis
          */
+         private (int, int?) minimax(int[,]polje, int igralec_poteza, int preostala_globina)
+        {
+            //var rezultat;
+            int[,] kopija = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+            //polje.CopyTo(kopija, 0);
+            //int[,] kopija = polje.Clone() as int[,];
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    kopija[i, j] = polje[i, j];
+                }
+            }
+            int ocena, r_ocena;
+            int temp, m_poteza = 0;
+            int? poteza;
+            int? r_poteza; /// med 0 in 9 ... ce je null je nespremenjeno ostale stevilke so gumbi
+            if (preostala_globina <= 0 || je_list(kopija)) { return (izracun_ocene(kopija), null); }
+            if (igralec_poteza == 2) { ocena = int.MinValue; temp = 1; } /// pomeni da je max
+            else { ocena = int.MaxValue; temp = 2; } // na potezi min igralec
+
+            //poteza = 0;
+            poteza = null;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    /// ce je polje prosto
+                    if (kopija[i, j] == 0) {
+                        if (i == 0 && j == 0) { m_poteza = 0; }
+                        else if (i == 0 && j == 1) { m_poteza = 1; }
+                        else if (i == 0 && j == 2) { m_poteza = 2; }
+                        else if (i == 1 && j == 0) { m_poteza = 3; }
+                        else if (i == 1 && j == 1) { m_poteza = 4; }
+                        else if (i == 1 && j == 2) { m_poteza = 5; }
+                        else if (i == 2 && j == 0) { m_poteza = 6; }
+                        else if (i == 2 && j == 1) { m_poteza = 7; }
+                        else if (i == 2 && j == 2) { m_poteza = 8; }
+                        kopija[i, j] = igralec_poteza;
+                        var rezultat = minimax(kopija, temp, preostala_globina - 1); 
+                        r_ocena = rezultat.Item1; 
+                        r_poteza = rezultat.Item2; 
+                        kopija[i, j] = 0;
+
+                        if (r_ocena > ocena && igralec_poteza == 2 || r_ocena < ocena && igralec_poteza == 1) {
+                            ocena = r_ocena;
+
+                            poteza = m_poteza;
+
+                        }
+                    }
+                }
+            }
+            
+            return (ocena, poteza);
+
+        }
+
+        struct poteza {
+            public int x, y;
+        }
+        private int Bestmove() {
+            // AI na potezi
+            int bestScore = int.MinValue;
+            int m_poteza = 0;
+            poteza poteza;
+            poteza.x = 0;
+            poteza.y = 0;
+            int i, j;
+            for (i = 0; i < 3; i++)
+            {
+                for (j = 0; j < 3; j++)
+                {
+                    // Is the spot available?
+                    if (tabela[i,j] == 0)
+                    {
+                        tabela[i,j] = 2;
+                        int score = moj_minimax(tabela, 0, false);
+                        tabela[i,j] = 0;
+                        if (score > bestScore)
+                        {
+                            bestScore = score;
+                            poteza.x = i;
+                            poteza.y = j;
+                        }
+                    }
+                }
+            }
+
+            i = poteza.x;
+            j = poteza.y;
+
+            if (i == 0 && j == 0) { m_poteza = 0; }
+            else if (i == 0 && j == 1) { m_poteza = 1; }
+            else if (i == 0 && j == 2) { m_poteza = 2; }
+            else if (i == 1 && j == 0) { m_poteza = 3; }
+            else if (i == 1 && j == 1) { m_poteza = 4; }
+            else if (i == 1 && j == 2) { m_poteza = 5; }
+            else if (i == 2 && j == 0) { m_poteza = 6; }
+            else if (i == 2 && j == 1) { m_poteza = 7; }
+            else if (i == 2 && j == 2) { m_poteza = 8; }
+            //tabela[i,j] = 1; // ker smo ai
+            return m_poteza;
+        }
+
+        private int moj_minimax(int[,]polje, int globina, bool Je_Max) {
+            
+            int test = zmaga(polje);
+            if (test != 2) {
+                return test;
+                //preveri_zmaga(polje);
+            }
+            // ne pomaga
+            if (globina == MAX_globina-1 || je_list(polje)) {
+                return izracun_ocene(polje); 
+            }
+
+            if (Je_Max)
+            {
+                int bestScore = int.MinValue;
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Je na voljo
+                        if (polje[i, j] == 0)
+                        {
+                            polje[i, j] = 2;
+                            int score = moj_minimax(polje, globina + 1, false);
+                            polje[i, j] = 0;
+                            
+                            if (score > bestScore) { bestScore = score; }
+                        }
+                    }
+                }
+                return bestScore;
+            }
+            else
+            {
+                int bestScore = int.MaxValue;
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Je na voljo
+                        if (polje[i, j] == 0)
+                        {
+                            polje[i, j] = 1;
+                            int score = moj_minimax(polje, globina + 1, true);
+                            polje[i, j] = 0;
+                            if (score < bestScore) { bestScore = score; }
+                        }
+                    }
+                }
+                return bestScore;
+            }
+        }
+
+        private int zmaga(int[,] tabela) {
+            if (tabela[0, 0] == 1 && tabela[0, 1] == 1 && tabela[0, 2] == 1
+                || tabela[1, 0] == 1 && tabela[1, 1] == 1 && tabela[1, 2] == 1
+                || tabela[2, 0] == 1 && tabela[2, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 0] == 1 && tabela[2, 0] == 1
+                || tabela[0, 1] == 1 && tabela[1, 1] == 1 && tabela[2, 1] == 1
+                || tabela[0, 2] == 1 && tabela[1, 2] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 2] == 1 && tabela[1, 1] == 1 && tabela[2, 0] == 1)
+
+            {
+                // igralec je zmagal
+                return -10;
+            }
+            /*
+            else if (button1.Text == "O" && button2.Text == "O" && button3.Text == "O"
+                || button4.Text == "O" && button5.Text == "O" && button6.Text == "O"
+                || button7.Text == "O" && button8.Text == "O" && button9.Text == "O"
+                || button1.Text == "O" && button4.Text == "O" && button7.Text == "O"
+                || button2.Text == "O" && button5.Text == "O" && button8.Text == "O"
+                || button3.Text == "O" && button6.Text == "O" && button9.Text == "O"
+                || button1.Text == "O" && button5.Text == "O" && button9.Text == "O"
+                || button3.Text == "O" && button5.Text == "O" && button7.Text == "O")
+                */
+            else if (tabela[0, 0] == 2 && tabela[0, 1] == 2 && tabela[0, 2] == 2
+                || tabela[1, 0] == 2 && tabela[1, 1] == 2 && tabela[1, 2] == 2
+                || tabela[2, 0] == 2 && tabela[2, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 0] == 2 && tabela[2, 0] == 2
+                || tabela[0, 1] == 2 && tabela[1, 1] == 2 && tabela[2, 1] == 2
+                || tabela[0, 2] == 2 && tabela[1, 2] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 2] == 2 && tabela[1, 1] == 2 && tabela[2, 0] == 2)
+            {
+                // ai zmaga
+                return 10;
+            }
+            else if (st_praznih == 0) { 
+                /// ni zmagovalca in ni praznih
+                return 0; // neodloceno
+            }
+
+            return 2; /// nepomembno
+        }
+
+
+
+        struct koordinate_premika{
+            public int? x, y;
+        }
+        private (int, koordinate_premika?) MiniMax(int[,] polje, int igralec_poteza, int preostala_globina) {
+            /// preverimo globino in ce je slucajno konec
+            if (preostala_globina <= 0 || je_list(polje)) { return (izracun_ocene(polje), null); }
+            /// ai=2, igralec=1
+            int ocena;
+            int temp;
+            koordinate_premika premik;
+            if (igralec_poteza == 1) { ocena = int.MaxValue; temp = 2; }
+            else { ocena = int.MinValue; temp = 1; }
+            premik.x = null;
+            premik.y = null;
+            /// pogledamo vsa mozna prosta mesta
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (polje[i, j] == 0) {
+                        polje[i, j] = igralec_poteza; /// ai=2, igralec=1
+                                                      /// poklicem minimax
+                        var rezultat = MiniMax(polje, temp, preostala_globina - 1);
+                        polje[i, j] = 0;
+                        if (rezultat.Item1 > ocena && igralec_poteza == 2 || rezultat.Item1 < ocena && igralec_poteza == 1)
+                        {
+                            premik.x = i;
+                            premik.y = j;
+                        }
+                    }
+                }
+            }
+
+            return (ocena, premik);
+        }
+
+        private bool je_list(int[,] polje) {
+            /// preverimo ce je konec oz vse polno
+            
+            bool polno = true;
+            bool zmagovalec = false;
+
+            for(int i=0; i < 3; i++)
+            {
+                for(int j=0; j < 3; j++)
+                {
+                    if (polje[i, j] == 0) { polno = false; }
+                }
+
+            }
+            if (polje[0, 0] == 1 && polje[0, 1] == 1 && polje[0, 2] == 1
+                || polje[1, 0] == 1 && polje[1, 1] == 1 && polje[1, 2] == 1
+                || polje[2, 0] == 1 && polje[2, 1] == 1 && polje[2, 2] == 1
+                || polje[0, 0] == 1 && polje[1, 0] == 1 && polje[2, 0] == 1
+                || polje[0, 1] == 1 && polje[1, 1] == 1 && polje[2, 1] == 1
+                || polje[0, 2] == 1 && polje[1, 2] == 1 && polje[2, 2] == 1
+                || polje[0, 0] == 1 && polje[1, 1] == 1 && polje[2, 2] == 1
+                || polje[0, 2] == 1 && polje[1, 1] == 1 && polje[2, 0] == 1)
+
+            {
+                zmagovalec = true;
+            }
+
+            else if (polje[0, 0] == 2 && polje[0, 1] == 2 && polje[0, 2] == 2
+                || polje[1, 0] == 2 && polje[1, 1] == 2 && polje[1, 2] == 2
+                || polje[2, 0] == 2 && polje[2, 1] == 2 && polje[2, 2] == 2
+                || polje[0, 0] == 2 && polje[1, 0] == 2 && polje[2, 0] == 2
+                || polje[0, 1] == 2 && polje[1, 1] == 2 && polje[2, 1] == 2
+                || polje[0, 2] == 2 && polje[1, 2] == 2 && polje[2, 2] == 2
+                || polje[0, 0] == 2 && polje[1, 1] == 2 && polje[2, 2] == 2
+                || polje[0, 2] == 2 && polje[1, 1] == 2 && polje[2, 0] == 2)
+            {
+                zmagovalec = true;
+            }
+            return (polno || zmagovalec);
+        }
+
+
+        private int izracun_ocene(int[,] polje) {
+            /// pogledamo prazne vrstice oz odprte
+            /// preveri ce je vse vredu!!!
+            int za_max = 0, za_min = 0;
+            int zmagovalec = 0; /// ce je 0 je tie, 1 = 1, 2 = 2
+            if (polje[0, 0] == 1 && polje[0, 1] == 1 && polje[0, 2] == 1
+                || polje[1, 0] == 1 && polje[1, 1] == 1 && polje[1, 2] == 1
+                || polje[2, 0] == 1 && polje[2, 1] == 1 && polje[2, 2] == 1
+                || polje[0, 0] == 1 && polje[1, 0] == 1 && polje[2, 0] == 1
+                || polje[0, 1] == 1 && polje[1, 1] == 1 && polje[2, 1] == 1
+                || polje[0, 2] == 1 && polje[1, 2] == 1 && polje[2, 2] == 1
+                || polje[0, 0] == 1 && polje[1, 1] == 1 && polje[2, 2] == 1
+                || polje[0, 2] == 1 && polje[1, 1] == 1 && polje[2, 0] == 1)
+
+            {
+                ///zmagovalec = 1;
+                /// zmagovalec clovek za min
+                return int.MinValue;
+            }
+
+            else if (polje[0, 0] == 2 && polje[0, 1] == 2 && polje[0, 2] == 2
+                || polje[1, 0] == 2 && polje[1, 1] == 2 && polje[1, 2] == 2
+                || polje[2, 0] == 2 && polje[2, 1] == 2 && polje[2, 2] == 2
+                || polje[0, 0] == 2 && polje[1, 0] == 2 && polje[2, 0] == 2
+                || polje[0, 1] == 2 && polje[1, 1] == 2 && polje[2, 1] == 2
+                || polje[0, 2] == 2 && polje[1, 2] == 2 && polje[2, 2] == 2
+                || polje[0, 0] == 2 && polje[1, 1] == 2 && polje[2, 2] == 2
+                || polje[0, 2] == 2 && polje[1, 1] == 2 && polje[2, 0] == 2)
+            {
+                //zmagovalec = 2;
+                /// zmaga ai in je to max
+                return int.MaxValue;
+            }
+
+            ///pogledamo prosta mesta
+            else {
+                /*for (int i = 0; i < 3; i++) {
+                    //for (int j = 0; j < 3; j++) { 
+                    if (polje[i, 0] != 1 && polje[i, 1] != 1 && polje[i, 2] != 1) { za_max++; } /// v vrstici ni clovek stisnil
+                    if (polje[0,i] != 1 && polje[1, i] != 1 && polje[2, i] != 1) { za_max++; } /// v stolpcu ni clovek stisnil
+                    if (polje[0, i] != 2 && polje[1, i] != 2 && polje[2, i] != 2) { za_min++; } /// v vrstici ni AI stisnil
+                    if (polje[0, i] != 2 && polje[1, i] != 2 && polje[2, i] != 2) { za_min++; } /// v stolpcu ni AI stisnil
+
+                }*/
+                if (polje[0, 0] != 1 && polje[0, 1] != 1 && polje[0, 2] != 1) { za_max++; } /// v vrstici ni clovek stisnil
+                if (polje[1, 0] != 1 && polje[1, 1] != 1 && polje[1, 2] != 1) { za_max++; } /// v vrstici ni clovek stisnil
+                if (polje[2, 0] != 1 && polje[2, 1] != 1 && polje[2, 2] != 1) { za_max++; } /// v vrstici ni clovek stisnil
+                if (polje[0, 0] != 1 && polje[1, 0] != 1 && polje[2, 0] != 1) { za_max++; } /// v stolpcu ni clovek stisnil
+                if (polje[0, 1] != 1 && polje[1, 1] != 1 && polje[2, 1] != 1) { za_max++; } /// v stolpcu ni clovek stisnil
+                if (polje[0, 2] != 1 && polje[1, 2] != 1 && polje[2, 2] != 1) { za_max++; } /// v stolpcu ni clovek stisnil
+                if (polje[0, 0] != 1 && polje[1, 1] != 1 && polje[2, 2] != 1) { za_max++; } /// v dia ni clovek stisnil
+                if (polje[2, 0] != 1 && polje[1, 1] != 1 && polje[0, 2] != 1) { za_max++; } /// v dia ni clovek stisnil
+
+                if (polje[0, 0] != 2 && polje[0, 1] != 2 && polje[0, 2] != 2) { za_min++; } /// v vrstici ni AI stisnil
+                if (polje[1, 0] != 2 && polje[1, 1] != 2 && polje[1, 2] != 2) { za_min++; } /// v vrstici ni AI stisnil
+                if (polje[2, 0] != 2 && polje[2, 1] != 2 && polje[2, 2] != 2) { za_min++; } /// v vrstici ni AI stisnil
+                if (polje[0, 0] != 2 && polje[1, 0] != 2 && polje[2, 0] != 2) { za_min++; } /// v stolpcu ni AI stisnil
+                if (polje[0, 1] != 2 && polje[1, 1] != 2 && polje[2, 1] != 2) { za_min++; } /// v stolpcu ni AI stisnil
+                if (polje[0, 2] != 2 && polje[1, 2] != 2 && polje[2, 2] != 2) { za_min++; } /// v stolpcu ni AI stisnil
+                if (polje[0, 0] != 2 && polje[1, 1] != 2 && polje[2, 2] != 2) { za_min++; } /// v dia ni AI stisnil
+                if (polje[2, 0] != 2 && polje[1, 1] != 2 && polje[0, 2] != 2) { za_min++; } /// v dia ni AI stisnil
+
+
+            }
+            // MessageBox.Show("max: " + za_max + " min: " + za_min + " razlika: " + (za_max-za_min));
+            return (za_max - za_min);
+        }
+
+        private void ai_z_minimax() {
+            int s = tabela[0,0];
+            //var rezultat = minimax(tabela, 2, MAX_globina);
+            int rezultat = Bestmove();
+            trenutniIgralec = Igralec.O; /// nastavi igralca na O
+            preveri_zmaga(tabela);
+            if (zmaga_igralca) { zmaga_igralca = false; return; }
+            //bool pogoj = false; /// da se vrti v loop dokler nima prave cifre
+            if (st_praznih == 0) { resetGame(); return; }
+            if (rezultat == 0) {
+                button1.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button1.Enabled = false; /// da ga nemores ponovno stisnet
+                button1.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[0, 0] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 1)
+            {
+                button2.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button2.Enabled = false; /// da ga nemores ponovno stisnet
+                button2.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[0, 1] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 2)
+            {
+                button3.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button3.Enabled = false; /// da ga nemores ponovno stisnet
+                button3.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[0, 2] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 3)
+            {
+                button4.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button4.Enabled = false; /// da ga nemores ponovno stisnet
+                button4.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[1, 0] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 4)
+            {
+                button5.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button5.Enabled = false; /// da ga nemores ponovno stisnet
+                button5.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[1, 1] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 5)
+            {
+                button6.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button6.Enabled = false; /// da ga nemores ponovno stisnet
+                button6.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[1, 2] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 6)
+            {
+                button7.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button7.Enabled = false; /// da ga nemores ponovno stisnet
+                button7.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[2, 0] = 2;
+                st_praznih--;
+
+            }
+            else if (rezultat == 7)
+            {
+                button8.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button8.Enabled = false; /// da ga nemores ponovno stisnet
+                button8.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[2, 1] = 2;
+                st_praznih--;
+            }
+            else if (rezultat == 8)
+            {
+                button9.Text = trenutniIgralec.ToString(); // spremenim text gumba na O
+                button9.Enabled = false; /// da ga nemores ponovno stisnet
+                button9.BackColor = System.Drawing.Color.DarkBlue; /// spremenim barvo gumba
+                tabela[2, 2] = 2;
+                st_praznih--;
+            }
+            preveri_zmaga(tabela);
+        }
+
+
+
+
+
+
+
 
     }
 }
