@@ -26,18 +26,18 @@ namespace Vaja2._0
             X, O
         }
 
-        Igralec trenutniIgralec;
+        Igralec trenutniIgralec; // igralec ki je trenutno na potezi
 
-        int[,] tabela = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }; /// moje polje kjer bomo devali X O
-        // X =1; O=2;
+        int[,] tabela = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }; /// moje polje kjer bomo devali X, O
+        // X = 1; O = 2;
 
-        int Igralec_Zmage = 0, AI_Zmage = 0;
+        int Igralec_Zmage = 0, AI_Zmage = 0; // koliko krat je zmagal kdo
         bool zmaga_igralca = false; // ce je igralec zmagal
 
         /// GUMBI ZA IZBIRP TEZAVNOSTI OZ GLOBINE
         private void radioButton1_Click(object sender, EventArgs e)
         {
-            MAX_globina = 1;
+            MAX_globina = 1; // si shranimo do katere globine gremo
         }
 
         private void radioButton2_Click(object sender, EventArgs e)
@@ -89,10 +89,10 @@ namespace Vaja2._0
                 button1.Text = trenutniIgralec.ToString(); // spremenim text gumba na X
                 button1.Enabled = false; /// da ga nemores ponovno stisnet
                 button1.BackColor = System.Drawing.Color.Cyan; /// spremenim barvo gumba
-                tabela[0, 0] = 1;
-                st_praznih--;
+                tabela[0, 0] = 1; // spremenimo tabelo na 1 da oznacimo da je oseba kliknila
+                st_praznih--; /// pomansamo stevilo praznih mest
 
-                ai_z_minimax();
+                ai_z_minimax(); // klicemo ai z minimax
             }
         }
 
@@ -495,14 +495,13 @@ namespace Vaja2._0
             public int x, y;
         }
 
-        /// zamenjat mores BESTMOVE BESTSCORE SCORE
-        private int Bestmove() {
+        private int Najboljsa_poteza() {
             // AI na potezi
-            int bestScore = int.MinValue; /// najboljsa poteza je trenutno najmanjsa (iscemo najvecjo)
-            int m_poteza = 0;
+            int Najboljsi_rez = int.MinValue; /// najboljsa poteza je trenutno najmanjsa (iscemo najvecjo)
+            int m_poteza = 0; // kateri gumb bomo oznacili
             poteza poteza; // si shranimo koordinate kam smo dali O
-            poteza.x = 0;
-            poteza.y = 0;
+            poteza.x = 0; // koordinate gumba
+            poteza.y = 0; // koordinate gumba
             int i, j;
             for (i = 0; i < 3; i++)
             {
@@ -513,12 +512,12 @@ namespace Vaja2._0
                     {
                         // je na voljo
                         tabela[i,j] = 2; // damo na 2 to je vrednost racunalnika
-                        int score = moj_minimax(tabela, 0, false); // ponovno poklicemo minimax algoritem
+                        int vrednost = moj_minimax(tabela, 0, false); // ponovno poklicemo minimax algoritem
                         tabela[i,j] = 0; // nastavimo nazaj na 0 da popravimo na originalno postavitev
-                        if (score > bestScore)
+                        if (vrednost > Najboljsi_rez)
                         {   
                             // ce je trenutna vrednost boljsa od najboljse vrednosti si shranimo
-                            bestScore = score;
+                            Najboljsi_rez = vrednost;
                             poteza.x = i;
                             poteza.y = j;
                         }
@@ -558,7 +557,7 @@ namespace Vaja2._0
             if (Je_Max)
             { 
                 // ce smo MAX smo rac
-                int bestScore = int.MinValue;
+                int Najboljsi_rez = int.MinValue;
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
@@ -566,20 +565,20 @@ namespace Vaja2._0
                         // Je na voljo
                         if (polje[i, j] == 0)
                         {
-                            polje[i, j] = 2;
-                            int score = moj_minimax(polje, globina + 1, false);
-                            polje[i, j] = 0;
+                            polje[i, j] = 2; /// damo prazno polje na dva koda je stisnil rac
+                            int vrednost = moj_minimax(polje, globina + 1, false); // klicemo ponovno funkcijo z novim poljem
+                            polje[i, j] = 0; /// popravimo originalno polje nazaj kot je bilo
                             
-                            if (score > bestScore) { bestScore = score; }
+                            if (vrednost > Najboljsi_rez) { Najboljsi_rez = vrednost; } // si shranimo najboljso vrednost
                         }
                     }
                 }
-                return bestScore;
+                return Najboljsi_rez; // vrnemo
             }
             else
             {
                 /// smo oseba iscemo min vrednost
-                int bestScore = int.MaxValue; // nastavimo na najvecjo mozno
+                int Najboljsi_rez = int.MaxValue; // nastavimo na najvecjo mozno
                 for (int i = 0; i < 3; i++)
                 {
                     for (int j = 0; j < 3; j++)
@@ -588,13 +587,13 @@ namespace Vaja2._0
                         if (polje[i, j] == 0)
                         {
                             polje[i, j] = 1;
-                            int score = moj_minimax(polje, globina + 1, true);
+                            int vrednost = moj_minimax(polje, globina + 1, true);
                             polje[i, j] = 0;
-                            if (score < bestScore) { bestScore = score; }
+                            if (vrednost < Najboljsi_rez) { Najboljsi_rez = vrednost; }
                         }
                     }
                 }
-                return bestScore;
+                return Najboljsi_rez;
             }
         }
 
@@ -784,7 +783,8 @@ namespace Vaja2._0
         private void ai_z_minimax() {
             //int s = tabela[0,0];
             //var rezultat = minimax(tabela, 2, MAX_globina);
-            int rezultat = Bestmove(); // dobimo kateri gumb je treba stisnet
+            int rezultat = Najboljsa_poteza(); // dobimo kateri gumb je treba stisnet
+            //int rezultat = bm();
             trenutniIgralec = Igralec.O; /// nastavi igralca na O
             preveri_zmaga(tabela); // se preverimo ce je kdo zmagal
             if (zmaga_igralca) { zmaga_igralca = false; return; }
@@ -866,11 +866,163 @@ namespace Vaja2._0
             preveri_zmaga(tabela); // ponovno preberi ce je kdo zmagovalec
         }
 
+        /// KODA ZA BREZ UPOSTEVANJA GLOBINE
+        /*
+        private int bm() {
+            // AI na potezi
+            int Najboljsi_rez = int.MinValue; /// najboljsa poteza je trenutno najmanjsa (iscemo najvecjo)
+            int m_poteza = 0; // kateri gumb bomo oznacili
+            poteza poteza; // si shranimo koordinate kam smo dali O
+            poteza.x = 0; // koordinate gumba
+            poteza.y = 0; // koordinate gumba
+            int i, j;
+            for (i = 0; i < 3; i++)
+            {
+                for (j = 0; j < 3; j++)
+                {
+                    // Ali je polje sploh na voljo
+                    if (tabela[i, j] == 0)
+                    {
+                        // je na voljo
+                        tabela[i, j] = 2; // damo na 2 to je vrednost racunalnika
+                        int vrednost = minimax_brez_globine(tabela, 0, false); // ponovno poklicemo minimax algoritem
+                        tabela[i, j] = 0; // nastavimo nazaj na 0 da popravimo na originalno postavitev
+                        if (vrednost > Najboljsi_rez)
+                        {
+                            // ce je trenutna vrednost boljsa od najboljse vrednosti si shranimo
+                            Najboljsi_rez = vrednost;
+                            poteza.x = i;
+                            poteza.y = j;
+                        }
+                    }
+                }
+            }
 
+            i = poteza.x;
+            j = poteza.y;
+            // pogledamo katera poteza je bla da vemo kaj more AI stisnet
+            if (i == 0 && j == 0) { m_poteza = 0; }
+            else if (i == 0 && j == 1) { m_poteza = 1; }
+            else if (i == 0 && j == 2) { m_poteza = 2; }
+            else if (i == 1 && j == 0) { m_poteza = 3; }
+            else if (i == 1 && j == 1) { m_poteza = 4; }
+            else if (i == 1 && j == 2) { m_poteza = 5; }
+            else if (i == 2 && j == 0) { m_poteza = 6; }
+            else if (i == 2 && j == 1) { m_poteza = 7; }
+            else if (i == 2 && j == 2) { m_poteza = 8; }
 
+            return m_poteza; // vrnemo
 
+        }
 
+        private int minimax_brez_globine(int[,] polje, int globina, bool Je_Max) {
+            int test = cw(polje); // pogledamo ce je kdo zmagal
+            if (test != 2)
+            {
+                // ce ni 2 je zmagal ali rac ali AI
+                return test;
+                //preveri_zmaga(polje);
+            }
+            // ne pomaga
+            
+            if (globina == MAX_globina - 1 || je_list(polje))
+            {
+                return izracun_ocene(polje); // ce smo presegli globino ali pa smo list
+            }
+            
+            if (Je_Max)
+            {
+                // ce smo MAX smo rac
+                int Najboljsi_rez = int.MinValue;
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Je na voljo
+                        if (polje[i, j] == 0)
+                        {
+                            polje[i, j] = 2; /// damo prazno polje na dva koda je stisnil rac
+                            int vrednost = minimax_brez_globine(polje, globina + 1, false); // klicemo ponovno funkcijo z novim poljem
+                            polje[i, j] = 0; /// popravimo originalno polje nazaj kot je bilo
 
+                            if (vrednost > Najboljsi_rez) { Najboljsi_rez = vrednost; } // si shranimo najboljso vrednost
+                        }
+                    }
+                }
+                return Najboljsi_rez; // vrnemo
+            }
+            else
+            {
+                /// smo oseba iscemo min vrednost
+                int Najboljsi_rez = int.MaxValue; // nastavimo na najvecjo mozno
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Je na voljo
+                        if (polje[i, j] == 0)
+                        {
+                            polje[i, j] = 1;
+                            int vrednost = minimax_brez_globine(polje, globina + 1, true);
+                            polje[i, j] = 0;
+                            if (vrednost < Najboljsi_rez) { Najboljsi_rez = vrednost; }
+                        }
+                    }
+                }
+                return Najboljsi_rez;
+            }
+        }
+
+        private int cw(int[,] polje) {
+            bool imamo_w = false;
+            int temp=0;
+            int prazni = 0;
+            if (tabela[0, 0] == 1 && tabela[0, 1] == 1 && tabela[0, 2] == 1
+                || tabela[1, 0] == 1 && tabela[1, 1] == 1 && tabela[1, 2] == 1
+                || tabela[2, 0] == 1 && tabela[2, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 0] == 1 && tabela[2, 0] == 1
+                || tabela[0, 1] == 1 && tabela[1, 1] == 1 && tabela[2, 1] == 1
+                || tabela[0, 2] == 1 && tabela[1, 2] == 1 && tabela[2, 2] == 1
+                || tabela[0, 0] == 1 && tabela[1, 1] == 1 && tabela[2, 2] == 1
+                || tabela[0, 2] == 1 && tabela[1, 1] == 1 && tabela[2, 0] == 1)
+
+            {
+                // igralec je zmagal
+                imamo_w = true;
+                temp = -10;
+            }
+
+            else if (tabela[0, 0] == 2 && tabela[0, 1] == 2 && tabela[0, 2] == 2
+                || tabela[1, 0] == 2 && tabela[1, 1] == 2 && tabela[1, 2] == 2
+                || tabela[2, 0] == 2 && tabela[2, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 0] == 2 && tabela[2, 0] == 2
+                || tabela[0, 1] == 2 && tabela[1, 1] == 2 && tabela[2, 1] == 2
+                || tabela[0, 2] == 2 && tabela[1, 2] == 2 && tabela[2, 2] == 2
+                || tabela[0, 0] == 2 && tabela[1, 1] == 2 && tabela[2, 2] == 2
+                || tabela[0, 2] == 2 && tabela[1, 1] == 2 && tabela[2, 0] == 2)
+            {
+                // ai zmaga
+                imamo_w = true;
+                temp = 10;
+            }
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (polje[i, j] == 0) { prazni++; }
+                }
+            }
+
+            if (prazni == 0 && !imamo_w)
+            {
+                /// ni zmagovalca in ni praznih
+                return 0; // neodloceno
+            }
+            else if (temp != 0) { return temp; }
+            else { return 2; }
+
+            //return 2; /// nepomembno
+        }
+
+    */
 
 
     }
